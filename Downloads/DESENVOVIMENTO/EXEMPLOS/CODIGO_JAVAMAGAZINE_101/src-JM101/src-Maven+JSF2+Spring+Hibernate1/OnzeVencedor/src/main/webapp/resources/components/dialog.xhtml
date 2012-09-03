@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      
+      >
+    
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="widgetVar" required="true" />
+        <cc:attribute name="header" required="true" />
+        <cc:attribute name="onCompleteOk" required="true" />
+        <cc:attribute name="upDateOk" required="true" />
+        
+        <cc:attribute name="frmResult" required="true" />
+        
+        <cc:attribute name="upDateVoltar" required="true" />
+        <cc:attribute name="renderedOk"  type="java.lang.Boolean" method-signature="java.lang.Boolean action()" />
+        <cc:attribute name="renderedVoltar" type="java.lang.Boolean" method-signature="java.lang.Boolean action()" />
+    </cc:interface> 
+<!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dialog modal="true"  id="teste"  resizable="false"   header="#{cc.attrs.header}"
+            widgetVar="#{cc.attrs.widgetVar}">
+            <h:form id="#{cc.attrs.frmResult}">
+                <p:panel  >
+                    <p:messages id="msg_result" showDetail="true" showSummary="false"/>
+                </p:panel>
+                <p:spacer height="3"/>
+                <p:panel>
+                    <center>
+                        <p:commandButton value="OK" rendered="#{cc.attrs.renderedVoltar}"  oncomplete="#{cc.attrs.widgetVar}.hide();#{cc.attrs.onCompleteOk}" update="#{cc.attrs.upDateOk}"/>
+                        <p:commandButton value="VOLTAR" rendered="#{cc.attrs.renderedVoltar}"  immediate="true" oncomplete="#{cc.attrs.widgetVar}.hide();" update="#{cc.attrs.upDateOk}"/>
+                    </center>
+                </p:panel>
+            </h:form>  
+           
+            
+        </p:dialog>
+    </cc:implementation>
+</html>

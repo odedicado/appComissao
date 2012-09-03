@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"       
+        template="./base.xhtml">
+
+    <ui:define name="title">
+        Devmedia Ecommerce
+    </ui:define>
+
+    <ui:define name="content">
+   
+        <h:form>
+            <h:panelGrid columns="1">
+                <h:outputText value="Tema para seu Usuario:" />   
+                <p:themeSwitcher value="#{configuracoesForm.meuTema}"  style="width:200px" effect="fade" id="statefulSwitcher">  
+                    <f:selectItem itemLabel="Escolha o tema:" itemValue="" />  
+                    <f:selectItems value="#{configuracoesForm.themes}" />  
+                    <p:ajax listener="#{configuracoesForm.salvarTema}" />  
+                </p:themeSwitcher>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

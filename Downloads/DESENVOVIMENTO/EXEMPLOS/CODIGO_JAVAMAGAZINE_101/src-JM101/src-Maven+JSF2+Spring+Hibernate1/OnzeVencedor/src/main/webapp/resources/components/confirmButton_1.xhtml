@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <!-- INTERFACE -->
+    <cc:interface displayName="The Confirm Button" name="confirmButton">
+        <cc:attribute name="actionOK" method-signature="java.lang.String batatinhaQuandoNasce()" required="true"/>
+        <cc:attribute name="actionOKDescription" type="String" default="OK"/>
+        <cc:attribute name="actionCancel" method-signature="java.lang.String joselito()" required="true"/>
+        <cc:attribute name="actionCancelDescription" type="String" default="Cancel"/>
+        <cc:attribute name="OKJavaScriptMessageAddOn" type="String" default="to proceed operation ?"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+          <!--MODAL DE CADSATRO DOS CLUBES-->
+        <p:dialog widgetVar="dlg_result_clube" modal="true"  resizable="false" closable="false">
+            <h:form id="frm_result_clube">
+                <p:panel  >
+                    <p:messages id="msg_result_clube" showDetail="true" showSummary="false"/>
+                </p:panel>
+                <p:spacer height="3"/>
+                <p:panel>
+         
+                </p:panel>
+            </h:form>  
+        </p:dialog> 
+        
+        
+        
+        
+        <h:commandButton onclick="javascript:return confirm('Are you sure #{cc.attrs.OKJavaScriptMessageAddOn}');" action="#{cc.attrs.actionOK}" value="#{cc.attrs.actionOKDescription}"/>
+        &nbsp;
+        <cc:insertChildren/>
+        <h:commandButton onclick="javascript:return confirm('Are you sure to CANCEL this operation ?')" action="#{cc.attrs.actionCancel}" value="#{cc.attrs.actionCancelDescription}" immediate="true"/>
+    </cc:implementation>
+</html>

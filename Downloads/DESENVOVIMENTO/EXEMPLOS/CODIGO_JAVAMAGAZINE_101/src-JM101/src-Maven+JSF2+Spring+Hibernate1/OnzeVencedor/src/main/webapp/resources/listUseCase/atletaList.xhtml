@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+    <!-- INTERFACE -->
+    <cc:interface  displayName="Lista dos Atletas Cadastrados" name="atletaList">
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation >
+        <!-- TABELA DE CONSULTA DOS ATLETAS-->
+        <h:form prependId="false" id="frm1312321"> 
+            <center id="132132">
+                <p:panelGrid  columns="1">
+                    <f:facet name="header">#{msg.atleta_atleta}</f:facet> 
+
+                    <p:dataTable value="#{atletaBean.atletas}" id="dtable_listarTodos_atleta" var="atleta" 
+                                 paginator="true" rows="5"  
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15"    
+                                 >
+                        <p:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{atleta.idf}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">NOME</f:facet>
+                            <h:outputText value="#{atleta.nome}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">CLUBE</f:facet>
+                            <h:outputText value="#{atleta.clube.nome}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">#{msg.column_edit}</f:facet>
+                            <p:commandButton id="btnEditarAtleta" value="Editar" style="width: 40px; height: 40px;" icon="btnSelecionar" 
+                                             update=":frm_cad_atleta"  oncomplete="dlg_cad_atleta.show()"  action="#{atletaBean.doUpdate()}"
+
+                                             >
+                                <f:setPropertyActionListener target="#{atletaBean.atleta}" value="#{atleta}" />
+                            </p:commandButton>
+
+
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">#{msg.column_delete}</f:facet>
+                            <p:commandButton id="btnDeletarAtleta" style="width: 40px; height: 40px;" 
+                                             icon="btnExcluir" 
+                                             oncomplete="dlg_cad_atleta.show()" 
+                                             update=":frm_cad_atleta"
+                                             action="#{atletaBean.doDelete()}">
+
+                                <f:setPropertyActionListener target="#{atletaBean.atleta}" value="#{atleta}"/>
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <f:facet name="footer" >
+                        <center id="centro" >
+                            
+                        </center>     
+                        <h:panelGrid  columns="2">
+                            
+                                <p:commandButton value="sasd" >
+
+
+                                </p:commandButton>
+                                <p:commandButton value="sasd" >
+
+
+                                </p:commandButton>
+                        
+
+                        </h:panelGrid>
+
+
+
+                    </f:facet>
+
+                </p:panelGrid>
+            </center>
+        </h:form> 
+    </cc:implementation>
+</html>

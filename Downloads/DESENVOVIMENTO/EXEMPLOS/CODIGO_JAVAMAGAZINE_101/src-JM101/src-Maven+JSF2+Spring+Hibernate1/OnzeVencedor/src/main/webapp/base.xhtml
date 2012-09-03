@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/css.css" rel="stylesheet" type="text/css" />
+        <title>Facelets Template</title>
+        <ui:insert name="head"></ui:insert>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="50" resizable="false" closable="false" collapsible="true">
+                
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="west" size="200" header="MENU PRICIPAL" resizable="true" closable="false" collapsible="true">
+                <h:form id="frmMenu" prependId="false" >
+                    <p:accordionPanel>  
+                        <p:tab title="CADASTRO">  
+                            <li><p:commandButton action="/pages/clube.jsf" value="Clube"/></li>
+                            <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Atleta"/></li>
+                            <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Endereco"/></li>
+                        </p:tab>  
+                        <p:tab title="CONFIGIRACOES">  
+                            <p:commandButton style="width: 40px; height: 40px;" update=":frmMenuIndex" oncomplete="dlg_subMenu.show()" icon="btnMenuConfiguracoes" action="#{menuBean.doPrepareMenuConfiguracoes()}"/>
+                        </p:tab>  
+                        
+                        <p:tab title="HOME">  
+                            <li><p:commandButton action="#{menuBean.goToHome()}" value="#{msg.template_home}"/></li>
+                        </p:tab>
+                    </p:accordionPanel> 
+                </h:form>
+            </p:layoutUnit>
+
+        
+            <p:layoutUnit position="center">
+                <ui:insert name="content">Content</ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+        
+
+        <p:dialog widgetVar="dlg_subMenu" modal="true" showEffect="fade"  appendToBody="true"  resizable="false" closable="true">
+            <center>
+                <h:form id="frmMenuIndex"> 
+                    <p:panel >
+                        <f:facet name="header">CONFIGURACOES</f:facet> 
+                        <p:panel>
+                            <p:dataGrid id="tbMenu" var="menu" value="#{menuBean.listMenuHome}" columns="9"  
+                                        rows="5">  
+                                <p:column>  
+                                    <p:panel>
+                                        <f:facet name="header">#{menu.nomeMenuPai}</f:facet> 
+                                        <h:panelGrid columns="2">
+                                            <p:panelGrid  columns="2">
+                                                <p:graphicImage style="width: 60px; height: 60px;" value="#{menu.imagemMenuHome}"/>   
+                                                <p:commandButton  style="width: 40px; height: 40px;" icon="btnMenuConfiguracoes"  action="/configuracoes.jsf"/>
+                                            </p:panelGrid>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:column>  
+
+                            </p:dataGrid>  
+                        </p:panel>
+
+
+                    </p:panel>
+                </h:form>  
+            </center>
+        </p:dialog> 
+
+    
+    </h:body>
+
+</html>

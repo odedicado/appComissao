@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:components="http://java.sun.com/jsf/composite/components"
+                >
+    <ui:define name="title"> <h:outputText  value="${msg.atleta_atleta}"/> </ui:define> 
+    
+    <ui:define name="head"> 
+       
+   
+    </ui:define> 
+
+    <ui:define name="content"> 
+         
+      <ui:include src="listAtletas.xhtml" />  
+      <ui:include src="crudAtleta.xhtml" />  
+    
+    <!---MODAL DO POP UP-->
+    <p:dialog widgetVar="dlg_popUp"  modal="true"  appendToBody="true" resizable="false" closable="false">
+        <h:form  binding="#{atletaBean.formPopUp}" id="frm_popUp">
+            <center>
+                <p:panel>
+                    <h:panelGrid columns="2" >
+                        <p:inputText maxlength="30"  id="txtPesquisar" value="#{atletaBean.popup.busca}" size="30"/>
+                        <p:commandButton action="#{atletaBean.doPesquisaPopUp()}" update="dtable_popUp" value="Pesquisar"/>
+                    </h:panelGrid>       
+                </p:panel>
+                <p:spacer height="5"/>
+
+                <p:panel>
+                    <p:panelGrid  columns="1">
+                        <f:facet name="header"> ESCOLHER O(A) #{atletaBean.popup.tipo}</f:facet> 
+                        <p:dataTable rendered="#{!atletaBean.popup.listaEntity.isEmpty()}" value="#{atletaBean.popup.listaEntity}" id="dtable_popUp" var="popup" 
+                                     paginator="true" rows="5"  
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                     rowsPerPageTemplate="5,10,15"    
+                                     >
+
+                            <p:column width="15" >
+                                <f:facet name="header">ID</f:facet>
+                                <h:outputText value="#{popup.id}" />
+                            </p:column>
+
+                            <p:column width="200"  >
+                                <f:facet  name="header">NOME</f:facet>
+                                <h:outputText value="#{popup.nome}" />
+                            </p:column>
+
+                            <p:column width="35" >
+
+                                <f:facet name="header">SEL</f:facet>
+                                <center> 
+                                    <p:commandButton image="ui-icon-search" oncomplete="dlg_popUp.hide()" action="#{atletaBean.doFinishPopUp()}" update="#{atletaBean.popup.componentUpDate}">
+                                        <f:setPropertyActionListener target="#{atletaBean.popup.popup}" value="#{popup}" />
+                                    </p:commandButton>
+                                </center>
+                            </p:column>
+                        </p:dataTable>
+
+                        <f:facet name="footer">
+                            <center>
+                                <h:panelGrid  columns="2"> 
+                                    <p:commandLink value="Sair" action="#{atletaBean.doCancelpopUp()}" update="dtable_popUp" oncomplete="dlg_popUp.hide()"/>
+                                </h:panelGrid> 
+                            </center>
+                        </f:facet>
+                    </p:panelGrid>
+                </p:panel>
+            </center>
+        </h:form>  
+    </p:dialog> 
+  </ui:define> 
+</ui:composition>

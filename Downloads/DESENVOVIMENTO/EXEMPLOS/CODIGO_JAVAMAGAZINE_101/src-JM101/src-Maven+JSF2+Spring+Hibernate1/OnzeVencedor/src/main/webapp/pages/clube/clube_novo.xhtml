@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:components="http://java.sun.com/jsf/composite/components"
+                >
+    <ui:define name="title"> <h:outputText  value="${msg.clube_clube}"/> </ui:define> 
+    <ui:define name="content"> 
+        
+        
+
+
+         <!-- TABELA DE CONSULTA DOS CLUBES-->
+        <h:form id="frm_listarTodos_clube"> 
+            
+            <center>
+                <p:panelGrid  columns="1">
+                    <f:facet name="header">#{msg.clube_clube}</f:facet> 
+                    
+                    <components:clubsList id="dtable_listarTodos_clube" />
+            
+
+                    <p:dataTable value="#{clubeBean.clubes}" var="clube"  id="dtable_listarTodos_clube" 
+                                 paginator="true" rows="10"  
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15"    
+                                 >
+                        <p:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{clube.idf}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{clube.nome}" />
+                        </p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">Endereco</f:facet>
+                            <h:outputText value="#{clube.endereco}" />
+                        </p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">#{msg.column_edit}</f:facet>
+                            <p:commandLink value="Alterar"  oncomplete="dlg_cad_clube.show()" update=":frm_cad_clube" action="#{clubeBean.doUpdate()}">
+                                <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
+                            </p:commandLink>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">#{msg.column_delete}</f:facet>
+
+                            <p:commandLink id="lnkDelete" value="Excluir"
+                                           oncomplete="dlg_cad_clube.show()" 
+                                           update=":frm_cad_clube"
+                                           action="#{clubeBean.doDelete()}">
+                                <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}"/>
+                            </p:commandLink>
+
+                        </p:column>
+                    </p:dataTable>
+                    <f:facet name="footer">
+                        <center>
+                            <h:panelGrid  columns="2"> 
+                                <p:commandButton value="Novo"  action="#{clubeBean.doCreate()}" update=":frm_cad_clube,frm_listarTodos_clube" oncomplete="dlg_cad_clube.show();"/>
+                                <p:commandButton value="Todos"  action="#{clubeBean.doListClubAll()}" update="dtable_listarTodos_clube,:frm_listarTodos_clube" /> 
+                            </h:panelGrid> 
+                        </center>
+                    </f:facet>
+                </p:panelGrid>
+            </center>
+        </h:form> 
+
+        <!--MODAL DE CADSATRO DOS CLUBES-->
+        <p:dialog widgetVar="dlg_cad_clube" modal="true" resizable="false" closable="true"> 
+            <h:form id="frm_cad_clube"> 
+                <center>
+                    <p:panel>
+                        <f:facet name="header">#{msg.clube_header}</f:facet> 
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1">
+                                <h:outputText value="Nome"/>
+                                <h:outputText value="Endereco:"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="1">
+                                <h:inputText maxlength="30"  disabled="#{clubeBean.getModoVisualizacao()}" size="30" value="#{clubeBean.clube.nome}"/>
+                                <h:inputText maxlength="30" disabled="#{clubeBean.getModoVisualizacao()}" size="30" value="#{clubeBean.clube.endereco}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:spacer height="5" />
+                    <p:panel>
+                        <center>
+                            <h:panelGrid  columns="2" >
+                                <p:commandButton value="#{clubeBean.modoCrud.description}" 
+                                                 update="frm_cad_clube,:frm_listarTodos_clube,:frm_result_clube"  
+                                                 oncomplete="dlg_result_clube.show();" 
+                                                 actionListener="#{clubeBean.doCrud()}">
+                                </p:commandButton>
+                                <p:commandButton value="#{msg.button_cancel}" immediate="true" oncomplete="dlg_cad_clube.hide();" actionListener="#{clubeBean.getToListAll()}" update=":frm_cad_clube,:frm_listarTodos_clube" />
+                            </h:panelGrid>
+                        </center>
+                    </p:panel>
+                    <p:spacer height="8"/>
+                </center>
+            </h:form> 
+        </p:dialog> 
+        
+        
+        
+        <!--MODAL DE CADSATRO DOS CLUBES-->
+        <p:dialog widgetVar="dlg_result_clube" modal="true"  resizable="false" closable="false">
+            <h:form id="frm_result_clube">
+                <p:panel  >
+                    <p:messages id="msg_result_clube" showDetail="true" showSummary="false"/>
+                </p:panel>
+                <p:spacer height="3"/>
+                <p:panel>
+                    <center>
+                        <p:commandButton value="OK" rendered="#{!clubeBean.getExisteMessagemErro()}"  oncomplete="dlg_result_clube.hide();dlg_cad_clube.hide();" update=":frm_listarTodos_clube,:frm_cad_clube,frm_result_clube" action="clube"/>
+                        <p:commandButton value="VOLTAR" rendered="#{clubeBean.getExisteMessagemErro()}" immediate="true" oncomplete="dlg_result_clube.hide();" update=":frm_listarTodos_clube"/>
+                    </center>
+                </p:panel>
+            </h:form>  
+        </p:dialog> 
+
+    </ui:define> 
+</ui:composition>

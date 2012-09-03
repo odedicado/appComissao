@@ -1,0 +1,39 @@
+/* 
+    Document   : css
+    Created on : 20/07/2012, 14:18:24
+    Author     : ALEX
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+html { 
+    height: 100%; 
+} 
+body  { 
+    margin: 1px; 
+    height: 100%; 
+    background: #ddd; 
+    margin-left: 5%; 
+    margin-right: 5%;  
+} 
+.barColumn { 
+    width: 30%; 
+} 
+.contextColumn { 
+    width: 70%; 
+}
+.btnSelecionar {    
+    background-image: url("../images/crud/editar.png") !important; 
+    width: 40px;  
+    height: 40px;
+}   
+.btnExcluir {    
+    background-image: url("../images/crud/excluir.png") !important; 
+    width: 40px;  
+    height: 40px;
+} 
+.btnMenuConfiguracoes {    
+    background-image: url("../images/menu/config.png") !important; 
+    width: 40px;  
+    height: 40px;
+} 
