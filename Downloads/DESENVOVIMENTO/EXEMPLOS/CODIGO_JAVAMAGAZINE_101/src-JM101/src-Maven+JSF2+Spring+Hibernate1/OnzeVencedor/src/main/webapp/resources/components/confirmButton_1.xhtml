@@ -19,26 +19,7 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        
-          <!--MODAL DE CADSATRO DOS CLUBES-->
-        <p:dialog widgetVar="dlg_result_clube" modal="true"  resizable="false" closable="false">
-            <h:form id="frm_result_clube">
-                <p:panel  >
-                    <p:messages id="msg_result_clube" showDetail="true" showSummary="false"/>
-                </p:panel>
-                <p:spacer height="3"/>
-                <p:panel>
-         
-                </p:panel>
-            </h:form>  
-        </p:dialog> 
-        
-        
-        
-        
-        <h:commandButton onclick="javascript:return confirm('Are you sure #{cc.attrs.OKJavaScriptMessageAddOn}');" action="#{cc.attrs.actionOK}" value="#{cc.attrs.actionOKDescription}"/>
-        &nbsp;
-        <cc:insertChildren/>
-        <h:commandButton onclick="javascript:return confirm('Are you sure to CANCEL this operation ?')" action="#{cc.attrs.actionCancel}" value="#{cc.attrs.actionCancelDescription}" immediate="true"/>
+
+
     </cc:implementation>
 </html>

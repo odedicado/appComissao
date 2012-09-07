@@ -24,20 +24,39 @@
             
             <p:layoutUnit position="west" size="200" header="MENU PRICIPAL" resizable="true" closable="false" collapsible="true">
                 <h:form id="frmMenu" prependId="false" >
-                    <p:accordionPanel>  
-                        <p:tab title="CADASTRO">  
-                            <li><p:commandButton action="/pages/clube.jsf" value="Clube"/></li>
-                            <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Atleta"/></li>
-                            <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Endereco"/></li>
-                        </p:tab>  
-                        <p:tab title="CONFIGIRACOES">  
-                            <p:commandButton style="width: 40px; height: 40px;" update=":frmMenuIndex" oncomplete="dlg_subMenu.show()" icon="btnMenuConfiguracoes" action="#{menuBean.doPrepareMenuConfiguracoes()}"/>
-                        </p:tab>  
-                        
-                        <p:tab title="HOME">  
-                            <li><p:commandButton action="#{menuBean.goToHome()}" value="#{msg.template_home}"/></li>
-                        </p:tab>
-                    </p:accordionPanel> 
+                    <p:fieldset style="width: 30" legend="MENU PRINCIPAL" >
+                        <p:accordionPanel>  
+                            <p:tab title="CADASTRO">  
+                                <li><p:commandButton action="/pages/clube.jsf" value="Clube"/></li>
+                                <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Atleta"/></li>
+                                <li><p:commandButton action="#{menuBean.goToAtleta()}" value="Endereco"/></li>
+                            </p:tab>  
+                            <p:tab  title="CONFIGIRACOES">  
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid  columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                            </p:tab>  
+
+                            <p:tab title="HOME">  
+                                <li><p:commandButton action="#{menuBean.goToHome()}" value="#{msg.template_home}"/></li>
+
+                            </p:tab>
+                        </p:accordionPanel> 
+
+                    </p:fieldset>
                 </h:form>
             </p:layoutUnit>
 
@@ -52,24 +71,20 @@
             <center>
                 <h:form id="frmMenuIndex"> 
                     <p:panel >
-                        <f:facet name="header">CONFIGURACOES</f:facet> 
+                        <f:facet name="header">#{menu.nomeMenuPai}</f:facet> 
                         <p:panel>
                             <p:dataGrid id="tbMenu" var="menu" value="#{menuBean.listMenuHome}" columns="9"  
                                         rows="5">  
                                 <p:column>  
-                                    <p:panel>
-                                        <f:facet name="header">#{menu.nomeMenuPai}</f:facet> 
-                                        <h:panelGrid columns="2">
+                                    <center>
                                             <p:panelGrid  columns="2">
                                                 <p:graphicImage style="width: 60px; height: 60px;" value="#{menu.imagemMenuHome}"/>   
-                                                <p:commandButton  style="width: 40px; height: 40px;" icon="btnMenuConfiguracoes"  action="/configuracoes.jsf"/>
+                                                <p:commandButton  icon="ui-icon-search"  action="#{menu.linkMenuHome}"/>
                                             </p:panelGrid>
-                                        </h:panelGrid>
-                                    </p:panel>
+                                    </center>
                                 </p:column>  
-
                             </p:dataGrid>  
-                        </p:panel>
+s                        </p:panel>
 
 
                     </p:panel>

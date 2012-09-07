@@ -2,7 +2,6 @@ package br.com.javamagazine.onzevencedor.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,8 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -29,11 +29,13 @@ public class Atleta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDF_ATLETA")
+
     private Integer idf;
     
     @Column(name = "nome_atleta")
     @NotNull(message="O nome do Atleta nao pode ser nulo")
     @NotEmpty(message="O nome do atleta nao pode ser vazio")
+    @Length(min=1 ,max=20,message="O nome precisa conter no maximo 20 letras")
     private String nome;
     
     @Column(name = "DTA_NASCIMENTO")
@@ -48,8 +50,10 @@ public class Atleta implements Serializable {
     @JoinColumn(name = "IDF_CLUBE")
     private Clube clube;
     
+    
     @ManyToOne
     @JoinColumn(name = "id_cidade")
+    @Valid
     private Cidade cidade;
 
     public Integer getIdf() {
