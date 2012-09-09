@@ -54,7 +54,7 @@ public class AtletaBean extends BaseBean<Atleta> {
      * ---------------------------CRUD-------------------------------------------
      */
     @Override
-    protected void upDate() {
+    protected void finishUpDate() {
         try {
             System.out.println("METODO...upDate... inicio" + getPojo().getNome());
             System.out.println("METODO...upDate... inicio" + getPojo().getClube().getNome());
@@ -69,7 +69,7 @@ public class AtletaBean extends BaseBean<Atleta> {
     }
 
     @Override
-    public void create() {
+    public void finishCreate() {
         try {
             ///Clube c = new Clube();
             //c.setIdf(idfClube);
@@ -82,7 +82,7 @@ public class AtletaBean extends BaseBean<Atleta> {
     }
 
     @Override
-    public void delete() {
+    public void finishDelete() {
         try {
             atletaService.deleteAtleta(getPojo());
             getToListAll();

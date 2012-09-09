@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:mcc="http://myfaces.apache.org/commons/converters"
+                xmlns:t="http://myfaces.apache.org/tomahawk"
+                xmlns:mdjnm="http://mojarra.dev.java.net/mojarra_ext">
+    <ui:define name="title"> <h:outputText  value="${msg.funcionario_title}"/> </ui:define> 
+    <ui:define name="head"> 
+    </ui:define> 
+    
+    <ui:define name="content"> 
+        <!-- TABELA DE CONSULTA -->
+        <h:form id="frmCadFuncionario"> 
+            <p:fieldset legend="Pesquisa" >
+
+            </p:fieldset>
+            <p:spacer height="8" />
+            <p:fieldset legend="#{msg.funcionario_legend}" >
+                
+                <p:dataTable value="#{funcionarioBean.funcionarios}" var="entity"  id="resultados" 
+                             paginator="true" rows="5"  
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 >
+                    <p:column>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{entity.id}" />
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputText value="#{entity.nome}" />
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">#{msg.column_edit}</f:facet>
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">#{msg.column_delete}</f:facet>
+                        <p:commandButton style="width: 40px; height: 40px;" icon="btnExcluir" value="Excluir">
+                            
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <center>
+                <p:panel >
+                    <h:panelGrid  columns="2"> 
+                        <p:commandButton oncomplete="dlg_cad_funcionario.show()" value="NOVO"/> 
+                        <p:commandButton value="TODOS"  /> 
+                    </h:panelGrid> 
+                </p:panel>
+            </center>
+        </h:form>
+        
+        <!--MODAL DE CADSATRO DOS ATLETAS-->
+        <p:dialog widgetVar="dlg_cad_funcionario" id="dlCadFuncionario"  modal="true" appendToBody="true" style="font-size: 14px" resizable="false" closable="true"> 
+            <h:form prependId="false" id="frmCadastroFuncionario">
+
+                <f:facet name="header">#{msg.funcionario_title}</f:facet> 
+                <p:panel>
+                    <f:facet name="header">#{msg.funcionario_title}</f:facet> 
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Data Admissao"/>   
+                        <p:calendar id="cdataFuncionario" disabled="#{atletaBean.getModoVisualizacao()}" value="#{funcionarioBean.funcionario.dtaAdmissao}" pattern="dd/MM/yyyy" />  
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Nome"/>
+                        <p:inputText id="txtNomeFuncionario" style="width: 250px" value="#{funcionarioBean.funcionario.nome}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30" />
+                    </p:panelGrid>  
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Cpf"/>
+                        <p:inputText id="txtCpfFuncionario" style="width: 250px" value="#{funcionarioBean.funcionario.cpf}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30" />
+                    </p:panelGrid>  
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Email"/>
+                        <p:inputText style="width: 250px" value="#{funcionarioBean.funcionario.email}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30" />
+                    </p:panelGrid>  
+
+                    <h:outputText value="Cidade:"/> 
+                    <h:panelGrid columns="3" >
+                        <p:inputText style="width: 30px" /> 
+                        <p:inputText maxlength="30" style="width: 250px"  disabled="#{funcionarioBean.getModoVisualizacao()}" size="30" value="#{funcionarioBean.funcionario.cidade.nome}"/>
+                        <p:commandButton value="Pesquisar" id="btn_popUp_cidade" immediate="true" rendered="#{!funcionarioBean.getModoVisualizacao()}"/>
+                    </h:panelGrid>
+
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Comissao Maxima (%)"/>
+                        <p:inputText id="txtComissaoMaxFuncionario" style="width: 250px"  value="#{funcionarioBean.funcionario.comissaoMaxima}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30">
+                        </p:inputText>
+                    </p:panelGrid>  
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Comissao Dono (%)"/>
+                        <p:inputText id="txtComissaoDonoFuncionario"  style="width: 250px" value="#{funcionarioBean.funcionario.comissaoDono}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30">
+                        </p:inputText>
+                    </p:panelGrid>  
+
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Comissao Conjunta (%)"/>
+                        <p:inputText id="txtComissaoConjuntaFuncionario" style="width: 250px" value="#{funcionarioBean.funcionario.comissaoConjuntA}" disabled="#{funcionarioBean.getModoVisualizacao()}" size="30">
+                        </p:inputText>
+                    </p:panelGrid>  
+               
+                
+                
+                </p:panel>
+                <p:spacer height="5" />
+                <p:panel>
+                    <center>
+                        <h:panelGrid  columns="2" >
+                            <p:commandButton value="#{funcionarioBean.modoCrud.description}" />
+                            <p:commandButton value="#{msg.button_cancel}" immediate="#{funcionarioBean.refresh()}" actionListener="#{funcionarioBean.refreshFuncionarios()}"/>
+                        </h:panelGrid>
+                    </center>
+                </p:panel>
+                <p:spacer height="8"/>
+            </h:form>
+
+
+
+
+
+        </p:dialog> 
+
+    
+    
+    </ui:define> 
+</ui:composition>

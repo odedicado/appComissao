@@ -2,16 +2,15 @@ package br.com.javamagazine.onzevencedor.controller;
 
 import br.com.javamagazine.onzevencedor.entity.Clube;
 import br.com.javamagazine.onzevencedor.enums.ModoCrud;
-import br.com.javamagazine.onzevencedor.service.CidadeService;
 import br.com.javamagazine.onzevencedor.service.ClubeService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "clubeBean")
-@SessionScoped
+@ViewScoped
 public class ClubeBean extends BaseBean<Clube> {
 
     /**
@@ -21,18 +20,6 @@ public class ClubeBean extends BaseBean<Clube> {
     @ManagedProperty("#{clubeService}")
     private ClubeService model;
     
-    
-    
-
-
-    public ClubeService getModel() {
-        return model;
-    }
-
-    public void setModel(ClubeService model) {
-        this.model = model;
-    }
-
     public Clube getClube() {
         if (getPojo() == null) {
             setPojo(new Clube());
@@ -58,32 +45,33 @@ public class ClubeBean extends BaseBean<Clube> {
             addErrorMessage(msg);
         }
     }
-
+    
     @Override
-    public void create() {
+    public void finishCreate() {
         try {
             setPojo(model.createClube(getPojo()));
-            finshCrud(getPojo(), true, propriedades.getString("clube_crud_ok"));
+            setClubes(getListPojo());
+            addInfoMessage(propriedades.getString("clube_crud_delete"));
         } catch (Exception e) {
             finshCrud(getPojo(), false, e.getMessage());
         }
     }
-
     @Override
-    public void upDate() {
+    public void finishUpDate() {
         try {
-            System.out.println("METODO...upDate... inicio" + getPojo().getNome());
             model.updateClube(getPojo());
-            finshCrud(getPojo(), true, propriedades.getString("clube_crud_update"));
+            setClubes(getListPojo());
+            addInfoMessage(propriedades.getString("clube_crud_delete"));
         } catch (Exception e) {
             finshCrud(getPojo(), false, e.getMessage());
         }
     }
-
-    public void delete() {
+    
+    @Override
+    public void finishDelete() {
         try {
             model.deleteClube(getPojo());
-            getToListAll();
+            setClubes(model.getAllClubes());
             addInfoMessage(propriedades.getString("clube_crud_delete"));
         } catch (Exception e) {
             finshCrud(getPojo(), false, e.getMessage());
@@ -102,13 +90,12 @@ public class ClubeBean extends BaseBean<Clube> {
     public void doDelete() {
         this.modoCrud = ModoCrud.REMOVER;
     }
-
+    
     public List<Clube> getClubes() {
         if (getListPojo() == null) {
             setListPojo(model.getAllClubes());
         }
         return getListPojo();
-        //System.out.println("RESULTADO.. METODO...getClubes()" + getListPojo());
     }
 
     public void setClubes(List<Clube> clubes) {
@@ -117,12 +104,5 @@ public class ClubeBean extends BaseBean<Clube> {
 
     public void doListClubAll() {
         setClubes(model.getAllClubes());
-    }
-
-    public void getToListAll() {
-        this.setPojo(new Clube());
-        setClubes(model.getAllClubes());
-        System.out.println("METODO...getToListAll... QTD" + getClubes().size());
-        System.out.println("METODO...getToListAll... POJO" + this.getPojo());
     }
 }

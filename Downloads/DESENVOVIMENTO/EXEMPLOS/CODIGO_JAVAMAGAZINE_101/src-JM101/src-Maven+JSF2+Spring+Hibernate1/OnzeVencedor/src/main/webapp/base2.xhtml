@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/css/css.css" rel="stylesheet" type="text/css" />
+        <title>Facelets Template</title>
+        <ui:insert name="head"></ui:insert>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" id="top" resizable="false" closable="false" collapsible="true">
+                
+                <p:menubar autoDisplay="true">
+                        <p:submenu label="File" icon="ui-icon-document">
+                            <p:submenu label="New" icon="ui-icon-contact">
+                                <p:menuitem value="Project" url="#" helpText="CTRL+N" />
+                                <p:menuitem value="Other" url="#" helpText="CTRL+O"/>
+                            </p:submenu>
+                            <p:menuitem value="Open" url="#" />
+                            <p:menuitem value="Quit" url="#" />
+                        </p:submenu>
+
+                        <p:submenu label="Edit" icon="ui-icon-pencil">
+                            <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
+                            <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+                        </p:submenu>
+
+                        <p:submenu label="Help" icon="ui-icon-help">
+                            <p:menuitem value="Contents" url="#" />
+                            <p:submenu label="Search" icon="ui-icon-search">
+                                <p:submenu label="Text">
+                                    <p:menuitem value="Workspace" url="#" />
+                                </p:submenu>
+                                <p:menuitem value="File" url="#" />
+                            </p:submenu>
+                        </p:submenu>
+                    </p:menubar>
+                
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="west" header="MENU PRICIPAL" resizable="true" closable="false" collapsible="true">
+                <h:form id="frmMenu" prependId="false" >
+                    <p:fieldset style="width: 30" legend="MENU PRINCIPAL" >
+                        <p:accordionPanel>  
+                            <p:tab title="CADASTRO">  
+                             </p:tab>  
+                            <p:tab  title="CONFIGIRACOES">  
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                                <p:panelGrid  columns="2" >
+                                    <p:commandButton style="width: -10px; height: 40px;" icon="btnMenuConfiguracoes" action="/configuracoes.jsf"/>
+                                    <h:outputText style="width: 120px; height: 40px;" value="Modificar Cor" />
+                                </p:panelGrid>
+                            </p:tab>  
+
+                            <p:tab title="HOME">  
+                                <li><p:commandButton action="#{menuBean.goToHome()}" value="#{msg.template_home}"/></li>
+
+                            </p:tab>
+                        </p:accordionPanel> 
+
+                    </p:fieldset>
+                </h:form>
+            </p:layoutUnit>
+
+        
+            <p:layoutUnit position="center">
+                <ui:insert name="content">Content</ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+        
+
+        <p:dialog widgetVar="dlg_subMenu" modal="true" showEffect="fade"  appendToBody="true"  resizable="false" closable="true">
+            <center>
+                <h:form id="frmMenuIndex"> 
+                    <p:panel >
+                        <f:facet name="header">#{menu.nomeMenuPai}</f:facet> 
+                        <p:panel>
+                            <p:dataGrid id="tbMenu" var="menu" value="#{menuBean.listMenuHome}" columns="9"  
+                                        rows="5">  
+                                <p:column>  
+                                    <center>
+                                            <p:panelGrid  columns="2">
+                                                <p:graphicImage style="width: 60px; height: 60px;" value="#{menu.imagemMenuHome}"/>   
+                                                <p:commandButton  icon="ui-icon-search"  action="#{menu.linkMenuHome}"/>
+                                            </p:panelGrid>
+                                    </center>
+                                </p:column>  
+                            </p:dataGrid>  
+s                        </p:panel>
+
+
+                    </p:panel>
+                </h:form>  
+            </center>
+        </p:dialog> 
+
+    
+    </h:body>
+
+</html>

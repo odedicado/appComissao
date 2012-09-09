@@ -55,11 +55,11 @@ public abstract class BaseBean<T> implements Serializable {
 
     public void doCrud() {
         if (modoCrud.equals(ModoCrud.NOVO)) {
-            create();
+            finishCreate();
         } else if (modoCrud.equals(ModoCrud.EDITAR)) {
-            upDate();
+            finishUpDate();
         } else if (modoCrud.equals(ModoCrud.REMOVER)) {
-            delete();
+            finishDelete();
         }
         //System.out.println("RESULTADO.. METODO...doCrud" + modoCrud);
     }
@@ -163,9 +163,9 @@ public abstract class BaseBean<T> implements Serializable {
         }
     }
 
-    protected abstract void create();
+    protected abstract void finishCreate();
 
-    protected abstract void upDate();
+    protected abstract void finishUpDate();
 
-    protected abstract void delete();
+    protected abstract void finishDelete();
 }

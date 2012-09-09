@@ -7,78 +7,85 @@
                 xmlns:p="http://primefaces.org/ui"
                 >
     <ui:define name="title"> <h:outputText  value="${msg.clube_clube}"/> </ui:define> 
+    <ui:define name="head"> 
+    </ui:define> 
+  
     <ui:define name="content"> 
-
         <!-- TABELA DE CONSULTA DOS CLUBES-->
         <h:form id="frmCadClubes"> 
-            <p:dataTable value="#{clubeBean.clubes}" var="clube"  id="resultados" 
-                         paginator="true" rows="10"  
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                         rowsPerPageTemplate="5,10,15"    
-                         >
-                <p:column>
-                    <f:facet name="header">ID</f:facet>
-                    <h:outputText value="#{clube.idf}" />
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">Nome do Clube</f:facet>
-                    <h:outputText value="#{clube.nome}" />
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">#{msg.column_edit}</f:facet>
-                    <p:commandLink value="Alterar"  oncomplete="dlg.show()" update=":formCad" action="#{clubeBean.update}">
-                        <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
-                    </p:commandLink>
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">#{msg.column_delete}</f:facet>
-                    <h:commandLink id="lnkDelete" value="Excluir"
-                                   onclick="if (!confirm('Tem certeza que deseja excluir este dado?')) return false"
-                                   action="#{clubeBean.delete}">
-                        <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
-                    </h:commandLink>
-                </p:column>
-            </p:dataTable>
-            <h:panelGrid  columns="2"> 
-                <p:commandButton value="add" action="#{clubeBean.create()}" update=":formCad" oncomplete="dlg.show();" /> 
-                <p:commandButton value="Listar Todos"  action="#{clubeBean.doListClubAll()}" update="resultados" /> 
-               </h:panelGrid> 
-        </h:form> 
-       
-        
-        <!--MODAL DE CADSATRO DOS CLUBES-->
-        <p:dialog widgetVar="dlg" modal="true" closable="true" 
-                  header="#{msg.clube_header}" > 
-            <h:form id="formCad"> 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Nome"/>
-                    <h:inputText maxlength="30" size="30" value="#{clubeBean.clube.nome}"/>
-                </h:panelGrid>
+            <p:fieldset legend="Pesquisa" >
+               
                 
-                <h:panelGrid columns="2">
-                    <h:outputText value="Endereco:"/>
-                    <h:inputText maxlength="30" size="30" value="#{clubeBean.clube.endereco}"/>
-                </h:panelGrid>
-                <p:commandButton value="#{msg.button_save}" update=":frmCadClubes,formCad,:frmConcluir"  oncomplete="modalMessage.show();" actionListener="#{clubeBean.salvar}"/>
-                <p:commandButton value="#{msg.button_cancel}" oncomplete="dlg.hide();" update=":frmCadClubes" action="clube"/>
-            </h:form> 
-        </p:dialog> 
-        
-        <!--MODAL DE CADSATRO DOS CLUBES-->
-        <p:dialog widgetVar="modalMessage" modal="true" closable="true">
-            <h:form id="frmConcluir">
+            </p:fieldset>
+            <p:spacer height="8" />
+            <p:fieldset legend="Listagems dos Clubes Cadastrados" >
+                <p:dataTable value="#{clubeBean.clubes}" var="clube"  id="resultados" 
+                             paginator="true" rows="5"  
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 >
+                    <p:column>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{clube.idf}" />
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">Nome do Clube</f:facet>
+                        <h:outputText value="#{clube.nome}" />
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">#{msg.column_edit}</f:facet>
+                        <p:commandLink value="Alterar"  oncomplete="dlg.show()" action="#{clubeBean.doUpdate()}">
+                            <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
+                        </p:commandLink>
+                    </p:column>
+                        
+                    <p:column>
+                        <f:facet name="header">#{msg.column_delete}</f:facet>
+                        <p:commandButton style="width: 40px; height: 40px;" id="cbExcluirClube" icon="btnExcluir" value="Excluir"
+                                         onclick="if (!confirm('Tem certeza que deseja excluir este dado?')) return false"
+                                         action="#{clubeBean.finishDelete()}">
+                            <f:setPropertyActionListener target="#{clubeBean.clube}" value="#{clube}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            <center>
+                <p:panel >
+                    <h:panelGrid  columns="2"> 
+                        <p:commandButton value="add" action="#{clubeBean.doCreate()}" oncomplete="dlg_cad_clube.show();" /> 
+                        <p:commandButton value="Listar Todos"  action="#{clubeBean.doListClubAll()}" update="resultados" /> 
+                    </h:panelGrid> 
+                </p:panel>
+            </center>
+        </h:form> 
+         <!--MODAL DE CADSATRO DOS ATLETAS-->
+         <p:dialog widgetVar="dlg_cad_clube"  modal="true" appendToBody="true" style="font-size: 14px" resizable="false" closable="true"> 
+        <center>
+        <f:facet name="header">ATLETAS</f:facet> 
+        </center>
+        <h:form id="frm_cad_clube" > 
+            <center>
                 <p:panel>
-                    <p:messages id="msg" showDetail="true" showSummary="false"/>
-                    <p:commandButton value="OK" oncomplete="modalMessage.hide();dlg.hide();" update=":frmCadClubes" action="clube"/>
-                    <p:commandButton value="VOLTAR" oncomplete="modalMessage.hide();" update=":frmCadClubes" action="clube"/>
-               </p:panel>
-            </h:form>  
-        </p:dialog> 
-        
-        
-        
+                    <f:facet name="header">#{msg.clube_header}</f:facet> 
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Nome"/>
+                        <p:inputText style="width: 250px" disabled="#{atletaBean.getModoVisualizacao()}" size="30" />
+                    </p:panelGrid>  
+                </p:panel>
+                <p:spacer height="5" />
+                <p:panel>
+                    <center>
+                        <h:panelGrid  columns="2" >
+                            <p:commandButton value="OK" />
+                            <p:commandButton value="#{msg.button_cancel}" immediate="#{clubeBean.refresh()}" oncomplete="dlg_cad_atleta.hide();"  actionListener="#{clubeBean.doListClubAll()}"/>
+                        </h:panelGrid>
+                    </center>
+                </p:panel>
+                <p:spacer height="8"/>
+            </center>
+        </h:form> 
+    </p:dialog> 
+    
     </ui:define> 
 </ui:composition>
